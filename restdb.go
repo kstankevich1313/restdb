@@ -2,6 +2,7 @@ package restdb
 
 import (
 	"database/sql"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	_ "github.com/lib/pq"
@@ -42,6 +43,9 @@ var (
 	Database = "restapi"
 )
 
+//go:embed create_db.sql
+var initDBSQL string
+
 func ConnectPostgres() *sql.DB {
 	conn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		Hostname, Port, Username, Password, Database)
@@ -51,6 +55,7 @@ func ConnectPostgres() *sql.DB {
 		log.Println(err)
 		return nil
 	}
+	db.Exec(initDBSQL)
 
 	return db
 }
