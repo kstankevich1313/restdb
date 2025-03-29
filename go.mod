@@ -1,3 +1,3 @@
-module github.com/illuman1313/restdb
+module github.com/kstankevich1313/restdb
 
 go 1.23.2
